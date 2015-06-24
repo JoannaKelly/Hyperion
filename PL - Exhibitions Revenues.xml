@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><HBRRepo version="11.1.2.1.00"><variables/><rulesets/><rules/><components><component id="166" name="PL - Exhibitions Revenues" product="Planning" type="script"><property name="application">PLN_UBM</property><property name="plantype">PL</property><property name="display_label">PL - Exhibitions Revenues</property><property name="comment"/><script type="calcscript"><![CDATA[/* Calculate segment data Aggregates */
+(@IDESCENDANTS("ME_Sponsorship");
+@IDESCENDANTS("ME_Conferences");
+@IDESCENDANTS("ME_Attendees");
+@IDESCENDANTS("ME_Exhibitions");
+)
+
+/* Calculate revenues */
+"ACC42020210" = (("ME_SpacePricex_m2f2" * "ME_SpaceAreaSold"->"ME_m2")) + (("ME_SpacePricex_m2f2" * "ME_SpaceAreaSold"->"ME_f2")) ; 
+"ACC42020205" = (("ME_ShellPricex_m2f2" * "ME_ShellAreaSold"->"ME_m2")) + (("ME_ShellPricex_m2f2" * "ME_ShellAreaSold"->"ME_f2") ); 
+"ACC42020215" = (("ME_PackagePricex_m2f2" * "ME_PackageAreaSold"->"ME_m2") ) + (("ME_PackagePricex_m2f2" * "ME_PackageAreaSold"->"ME_f2") );
+"ACC42020220" = (("ME_PavillionPricex_m2f2" * "ME_PavillionAreaSold"->"ME_m2") ) + (("ME_PavillionPricex_m2f2" * "ME_PavillionAreaSold"->"ME_f2") ) ;
+/* Defect 102 - update barter rev calculation to use average price */
+/*"ACC42300205" = (("ME_SpacePricex_m2f2" * "ME_SpaceBarterArea"->"ME_m2")) + (("ME_SpacePricex_m2f2" * "ME_SpaceBarterArea"->"ME_f2")) + ("ME_ShellPricex_m2f2" * "ME_ShellBarterArea"->"ME_m2") + ("ME_ShellPricex_m2f2" * "ME_ShellBarterArea"->"ME_f2") + ("ME_PackagePricex_m2f2" * "ME_PackageBarterArea"->"ME_m2") + ("ME_PackagePricex_m2f2" * "ME_PackageBarterArea"->"ME_f2")+ ("ME_PavillionPricex_m2f2" * "ME_PavillionBarterArea"->"ME_m2") + ("ME_PavillionPricex_m2f2" * "ME_PavillionBarterArea"->"ME_f2") +"ME_OtherBarterRev";*/
+"ACC42300205" = (("ME_BarterPricex_m2f2" * "ME_SpaceBarterArea"->"ME_m2")) + (("ME_BarterPricex_m2f2" * "ME_SpaceBarterArea"->"ME_f2")) + ("ME_BarterPricex_m2f2" * "ME_ShellBarterArea"->"ME_m2") + ("ME_BarterPricex_m2f2" * "ME_ShellBarterArea"->"ME_f2") + ("ME_BarterPricex_m2f2" * "ME_PackageBarterArea"->"ME_m2") + ("ME_BarterPricex_m2f2" * "ME_PackageBarterArea"->"ME_f2")+ ("ME_BarterPricex_m2f2" * "ME_PavillionBarterArea"->"ME_m2") + ("ME_BarterPricex_m2f2" * "ME_PavillionBarterArea"->"ME_f2") +"ME_OtherBarterRev" + "ACL0000"->ACC42300205_ADJ;
+"ACC42380204" = ("ME_StandAuditPrice" * "ME_StandAudittakeup%" * "ME_SpaceNumExhib"); 
+"ACC42040210" = ("ME_NumPayDeleg" * "ME_DelegRate");
+"ACC42060205" = ("ME_TotalNumSponsor" * "ME_NewSponsorRate") + "ACL0000"->ACC42060205_ADJ;
+"ACC42080205" = "ME_RegistrFee"*"ME_RegistrTakeUp%"*"ME_TotalNumExhib";
+"ACC42380206" = "ME_InsuranCharge"*"ME_InsuranTakeUp%"*"ME_TotalNumExhib";
+"ACC42040215" = "ME_NumPayAttend" * "ME_AdmisFee";
+"ACC42380250" = ("ME_BoardRoomRate" * "ME_TotalNumBoardRoom") + "ACL0000"->ACC42380250_ADJ;
+/*"ACC42400215" = "ME_ExhibAdj";*/
+"ACC42400215" = "ME_ExhibAdj"+ ME_ConfAdj;
+
+/* Calculate PL Aggregates */
+(@IDESCENDANTS("ACC40000000");)]]></script></component></components></HBRRepo>

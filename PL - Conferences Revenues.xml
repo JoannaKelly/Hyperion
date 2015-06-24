@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><HBRRepo version="11.1.2.1.00"><variables/><rulesets/><rules/><components><component id="165" name="PL - Conferences Revenues" product="Planning" type="script"><property name="application">PLN_UBM</property><property name="plantype">PL</property><property name="display_label">PL - Conferences Revenues</property><property name="comment"/><script type="calcscript"><![CDATA[/* Calculate segment data Aggregates */
+(@IDESCENDANTS("ME_Conferences");
+)
+
+/* Calculate revenues */
+"ACC42040210" = ("ME_NumPayDeleg" * "ME_DelegRate");]]></script></component></components></HBRRepo>

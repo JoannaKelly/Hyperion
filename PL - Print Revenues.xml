@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><HBRRepo version="11.1.2.1.00"><variables/><rulesets/><rules/><components><component id="1214" name="PL - Print Revenues" product="Planning" type="script"><property name="application">PLN_UBM</property><property name="plantype">PL</property><property name="display_label">PL - Print Revenues</property><property name="comment"/><script type="calcscript"><![CDATA[/* Calculate aggregates */
+@IDESCENDANTS("ME_Print");
+/*Step 2 - Calculate Print Revenues for the whole year as scenario is Budget */
+"ACC42100230" = "ME_NumInsertsPg" * "ME_InsertYield" + "ACL0000"->ACC42100230_ADJ;
+"ACC42120215" = ("ME_NumSubsc" * "ME_SubscYield") + "ME_SubOtherRev" + "ACL0000"->ACC42120215_ADJ; 
+"ACC42380258" = "ME_CopiesSold" * "ME_PricexIssue" + "ACL0000"->ACC42380258_ADJ;
+"ACC42100218" = ("ME_DisplayPages" * "ME_DisplayYield") + "ME_DisplayBanRev"+"ACL0000"->ACC42100218_ADJ;
+"ACC42100221" = "ME_ClassifPages" * "ME_ClassifYield"+"ACL0000"->ACC42100221_ADJ;
+"ACC42100224" = ("ME_RecruitPages" * "ME_RecruitYield") + "ME_RecruitRev"+"ACL0000"->ACC42100224_ADJ;
+"ACC42380238" = "ME_NumDirSold" * "ME_DirAvgPrice"  + "ACL0000"->ACC42380238_ADJ;
+/* 22nd June 2015 - Joanna Kelly - Updated Barter Revenue to be consistent in both the PL - Exhibitions & PL - Print Revenue Scripts
+"ACC42300205" = "ACC42300205"+"ME_PrintBarter"  + "ACL0000"->ACC42300205_ADJ;*/
+"ACC42300205" = (("ME_BarterPricex_m2f2" * "ME_SpaceBarterArea"->"ME_m2")) 
+              + (("ME_BarterPricex_m2f2" * "ME_SpaceBarterArea"->"ME_f2")) 
+              + ("ME_BarterPricex_m2f2" * "ME_ShellBarterArea"->"ME_m2") 
+              + ("ME_BarterPricex_m2f2" * "ME_ShellBarterArea"->"ME_f2")
+              + ("ME_BarterPricex_m2f2" * "ME_PackageBarterArea"->"ME_m2") 
+              + ("ME_BarterPricex_m2f2" * "ME_PackageBarterArea"->"ME_f2")
+              + ("ME_BarterPricex_m2f2" * "ME_PavillionBarterArea"->"ME_m2")
+              + ("ME_BarterPricex_m2f2" * "ME_PavillionBarterArea"->"ME_f2") 
+              + "ME_OtherBarterRev"
+              + "ME_PrintBarter"  
+              + "ACL0000"->ACC42300205_ADJ;
+ 
+"ACC42100236" = "ME_RegionPages" * "ME_RegDemYield" + "ACL0000"->ACC42100236_ADJ;]]></script></component></components></HBRRepo>
